@@ -24,29 +24,64 @@ static void task1(string[] input)
 
 static void task2(string[] input)
 {
-    Dictionary<string, string> replacements = new Dictionary<string, string>
-        {
-            { "one", "1" },
-            { "two", "2" },
-            { "three", "3" },
-            { "four", "4" },
-            { "five", "5" },
-            { "six", "6" },
-            { "seven", "7" },
-            { "eight", "8" },
-            { "nine", "9" }
-        };
-
-    string pattern = "\\b(" + string.Join("|", replacements.Keys) + ")\\b";
-    Regex regex = new Regex(pattern);
-
-    foreach(string i in input)
+    foreach (string i in input)
     {
-        string replaced = regex.Replace(i, match => replacements[match.Value]);
-        Console.WriteLine(replaced);
+        string result = "";
+        string[] findings = new string[i.Length];
+
+        MatchCollection matchesOne = Regex.Matches(i,@"(?:1|one)");
+        MatchCollection matchesTwo = Regex.Matches(i, @"(?:2|two)");
+        MatchCollection matchesThree = Regex.Matches(i, @"(?:3|three)");
+        MatchCollection matchesFour = Regex.Matches(i, @"(?:4|four)");
+        MatchCollection matchesFive = Regex.Matches(i, @"(?:5|five)");
+        MatchCollection matchesSix = Regex.Matches(i, @"(?:6|six)");
+        MatchCollection matchesSeven = Regex.Matches(i, @"(?:7|seven)");
+        MatchCollection matchesEight = Regex.Matches(i, @"(?:8|eight)");
+        MatchCollection matchesNine = Regex.Matches(i, @"(?:9|nine)");
+
+        foreach (Match m in matchesOne)
+        {
+            findings[m.Index] = "1";
+        }
+        foreach (Match m in matchesTwo)
+        {
+            findings[m.Index] = "2";
+        }
+        foreach (Match m in matchesThree)
+        {
+            findings[m.Index] = "3";
+        }
+        foreach (Match m in matchesFour)
+        {
+            findings[m.Index] = "4";
+        }
+        foreach (Match m in matchesFive)
+        {
+            findings[m.Index] = "5";
+        }
+        foreach (Match m in matchesSix)
+        {
+            findings[m.Index] = "6";
+        }
+        foreach (Match m in matchesSeven)
+        {
+            findings[m.Index] = "7";
+        }
+        foreach (Match m in matchesEight)
+        {
+            findings[m.Index] = "8";
+        }
+        foreach (Match m in matchesNine)
+        {
+            findings[m.Index] = "9";
+        }
+
+        findings = findings.Where(x => x != null).ToArray();
+
+        result = findings[0].ToString() + findings[findings.Length - 1].ToString();
+
+        Console.WriteLine("");
     }
-
-
 
 
     /*int total = 0;
