@@ -28,10 +28,14 @@ static void task2(string[] input)
     {
         string result = "";
         string[] findings = new string[i.Length];
+        MatchCollection matches = Regex.Matches(i, @"(?=(?:1|one)|(?:2|two)|(?:3|three)|(?:4|four)|(?:5|five)|(?:6|six)|(?:7|seven)|(?:8|eight)|(?:9|nine))");
+        Regex.
 
-        MatchCollection matchesOne = Regex.Matches(i, @"(?:(?:1|one)|(?:2|two)|(?:3|three)|(?:4|four)|(?:5|five)|(?:6|six)|(?:7|seven)|(?:8|eight)|(?:9|nine))");
+        Console.WriteLine(matches[0].Value);
 
-        string[] findingsArr = matchesOne.Cast<Match>().Select(x => x.Value).ToArray();
+        string[] findingsArr = matches.Cast<Match>().Select(x => x.Value).ToArray();
+
+
 
         int j = 0;
         foreach (string f in findingsArr)
