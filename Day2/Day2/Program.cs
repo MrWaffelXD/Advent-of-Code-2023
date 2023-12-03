@@ -8,7 +8,7 @@ namespace Day2
         {
             string[] input = File.ReadAllLines("input.txt");
 
-            Task1(input);
+            Task2(input);
         }
         static void Task1(string[] input)
         {
@@ -68,7 +68,53 @@ namespace Day2
         }
         static void Task2(string[] input)
         {
+            int totalScore = 0;
 
+            foreach (string game in input)
+            {
+                int amountRed = 0;
+                int amountGreen = 0;
+                int amountBlue = 0;
+
+                int gameNum = Convert.ToInt32(game.Split(':')[0].Split(' ')[1]);
+                string[] rounds = game.Split(';');
+                rounds[0] = rounds[0].Split(':')[1];
+                foreach (string round in rounds)
+                {
+                    string[] colours = round.Split(',');
+
+                    foreach (string colour in colours)
+                    {
+                        string[] c = colour.Split(" ");
+                        string color = c[2];
+                        int amount = Convert.ToInt32(c[1]);
+                        
+                        switch (color)
+                        {
+                            case "red":
+                                if (amount > amountRed)
+                                {
+                                    amountRed = amount;
+                                }
+                                break;
+                            case "green":
+                                if(amount > amountGreen)
+                                {
+                                    amountGreen = amount;
+                                }
+                                break;
+                            case "blue":
+                                if (amount > amountBlue)
+                                {
+                                    amountBlue = amount;
+                                }
+                                break;
+                        }
+                    }
+                }
+                totalScore += amountRed * amountGreen * amountBlue;
+            }
+            Console.WriteLine(totalScore);
         }
     }
 }
