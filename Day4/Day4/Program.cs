@@ -16,38 +16,38 @@ namespace Day4
             int totalScore = 0;
             foreach (string card in input)
             {
-                int cardNum = Convert.ToInt32(Regex.Match(card.Split(':')[0], @"\d{1,}").Value);
-                string[] numberGroups = card.Split("|");
+                int cardScore = 0;
 
-                numberGroups[0] = Regex.Replace(numberGroups[0], @"Card \d{1,}: ", "");
+                string cartRaw = Regex.Replace(card, @"Card {1,}\d{1}:", "");
 
-                MatchCollection wm = Regex.Matches(numberGroups[0], @"\d{1,}");
+                string[] cartValues = cartRaw.Split('|');
 
-                string[] winningArr = wm.Cast<Match>().Select(m => m.Value).ToArray();
-                string[] scratchedArr = Regex.Matches(numberGroups[1], @"\d{1,}").Cast<Match>().Select(m => m.Value).ToArray();
+                //int[] winningValues = Regex.Matches(cartValues[0], @"\d{1,}").Cast<Match>().Select(m => Convert.ToInt32(m.Value)).ToArray();
+                List<int> winningValues = new List<int>();
+                List<int> scratchedValues = new List<int>();
 
-                List<int> winningNums = StringArrayToIntList(winningArr);
-                List<int> scratchedNums = StringArrayToIntList(scratchedArr);
+                winningValues.AddRange(Regex.Matches(cartValues[0], @"\d{1,}").Cast<Match>().Select(m => Convert.ToInt32(m.Value)).ToArray());
+                scratchedValues.AddRange(Regex.Matches(cartValues[1], @"\d{1,}").Cast<Match>().Select(m => Convert.ToInt32(m.Value)).ToArray());
+                //int[] scratchedValues = Regex.Matches(cartValues[1], @"\d{1,}").Cast<Match>().Select(m => Convert.ToInt32(m.Value)).ToArray();
 
-                int score = 0;
-
-                foreach (int scratch in scratchedNums)
+                foreach(int scratched in scratchedValues)
                 {
-                    var x = winningNums.Find(i => i == scratch);
-                    if(x == scratch)
+                    if(winningValues.Find(val => val == scratched) == scratched)
                     {
-                        if (score == 0)
+                        winningValues.Remove(scratched);
+
+                        if(cardScore == 0)
                         {
-                            score++;
+                            cardScore++;
                         }
                         else
                         {
-                            score *= 2;
+                            cardScore = cardScore * 2;
                         }
                     }
                 }
 
-                totalScore += score;
+                totalScore += cardScore;
             }
             Console.WriteLine(totalScore);
         }
